@@ -232,10 +232,7 @@ def init_cli():
     )
     print()
 
-    user_confirmation = input(
-        "Is this information correct? [Y/n]: "
-    ).strip().lower()
-
+    user_confirmation = "y"
     if user_confirmation == "y" or user_confirmation == "":
         print("Writing configuration to disk...")
         init_config_file()
@@ -379,16 +376,12 @@ def set_username_password(write=False):
     """Set the ProtonVPN Username and Password."""
 
     print()
-    ovpn_username = input("Enter your ProtonVPN OpenVPN username: ")
+    ovpn_username = os.environ.get('PROTONVPN_USERNAME')
 
     # Ask for the password and confirmation until both are the same
     while True:
-        ovpn_password1 = getpass.getpass(
-            "Enter your ProtonVPN OpenVPN password: "
-        )
-        ovpn_password2 = getpass.getpass(
-            "Confirm your ProtonVPN OpenVPN password: "
-        )
+        ovpn_password1 = os.environ.get('PROTONVPN_PASSWORD')
+        ovpn_password2 = os.environ.get('PROTONVPN_PASSWORD')
 
         if not ovpn_password1 == ovpn_password2:
             print()
@@ -422,7 +415,7 @@ def set_protonvpn_tier(write=False):
 
     while True:
         print()
-        user_tier = input("Your plan: ")
+        user_tier = os.environ.get("PROTONVPN_PLAN")
 
         try:
             user_tier = int(user_tier)
@@ -467,7 +460,7 @@ def set_default_protocol(write=False):
 
     while True:
         print()
-        user_protocol_choice = input("Your choice: ")
+        user_protocol_choice = os.environ.get('PROTONVPN_PROTOCOLS')
 
         try:
             if user_protocol_choice == "":
